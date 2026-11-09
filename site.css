@@ -1,3 +1,4 @@
+
 * {
             margin: 0;
             padding: 0;
@@ -743,3 +744,74 @@
 
 .card .pack-size { padding: 0 15px 5px; color: #6b5547; font-size: 14px; font-weight: bold; }
 
+
+
+/* Keep the brand mark and payment QR compact on every page. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    color: #fff8ef;
+    text-decoration: none;
+}
+
+.brand-badge {
+    display: block;
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    max-width: 64px;
+    max-height: 64px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.brand-wordmark {
+    font-size: clamp(24px, 3vw, 42px);
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.upi-qr-content {
+    display: grid;
+    grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+    align-items: start;
+    gap: 24px;
+}
+
+.upi-qr-image {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    max-height: 360px;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.upi-qr-image[hidden],
+.upi-qr-details[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 650px) {
+    .brand-badge {
+        flex-basis: 52px;
+        width: 52px;
+        height: 52px;
+        max-width: 52px;
+        max-height: 52px;
+    }
+
+    .upi-qr-content {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .upi-qr-image {
+        max-width: 260px;
+        max-height: 300px;
+    }
+}
