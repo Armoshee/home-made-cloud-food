@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 136" role="img" aria-labelledby="title">
+  <title id="title">Bismillah Cloud Food | HomeMade</title>
+  <image href="images/glassy-cloud-food-badge.png" x="0" y="0" width="136" height="136" preserveAspectRatio="xMidYMid meet"/>
+  <text x="158" y="83" font-family="Georgia,serif" font-size="40" font-weight="700" fill="#522018">HomeMade</text>
+  <path d="M161 99h252" stroke="#c69748" stroke-width="1.2"/>
+  <path d="M420 98h35" stroke="#c69748" stroke-width="1.2"/>
+  <circle cx="462" cy="98" r="2" fill="#c69748"/>
+</svg>
