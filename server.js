@@ -214,7 +214,7 @@ async function notifyBusiness(order) {
     const alertType = order.status === "PAID_PENDING_APPROVAL"
         ? "PhonePe payment received and verified. Order " + orderId
         : order.paymentMethod === "UPI QR"
-            ? "Customer reports UPI payment; verify bank credit before approval. Order " + orderId
+            ? "New UPI QR order submitted; payment is pending verification. Order " + orderId
             : "New order submitted; verify payment before approval. Order " + orderId;
     const parameters = [
         alertType,
