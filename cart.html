@@ -247,7 +247,20 @@
         const data = new FormData(form);
         const button = form.querySelector(".place-order-button");
         button.disabled = true; button.textContent = "Opening PhonePe checkout…"; status.textContent = ""; whatsappLink.hidden = true;
-        try {
+                if (!document.getElementById("upi-qr-image").hidden) {
+            try {
+                const reference = String(data.get("upiReference") || "").trim();
+                const response = await fetch("/api/manual-orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(checkoutPayload(data, items, reference)) });
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(result.error || "Could not submit this order.");
+                cart = {}; save(); render();
+                status.textContent = result.businessNotified ? "Order " + result.orderId + " sent to the shop WhatsApp. Payment is pending verification." : "Order " + result.orderId + " saved, but the shop WhatsApp alert could not be sent.";
+                if (!result.businessNotified) { whatsappLink.href = whatsappOrderUrl(data, items, result.orderId); whatsappLink.textContent = "Send order details to WhatsApp"; whatsappLink.hidden = false; }
+            } catch (error) { status.textContent = error.message || "Could not submit this order."; whatsappLink.href = whatsappOrderUrl(data, items); whatsappLink.textContent = "Send order details to WhatsApp"; whatsappLink.hidden = false; }
+            finally { button.disabled = false; button.textContent = "Place your order"; }
+            return;
+        }
+try {
             const response = await fetch("/api/payments/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(checkoutPayload(data, items)) });
             const result = await response.json().catch(() => ({}));
             if (!response.ok) throw new Error(result.error || "PhonePe checkout is not configured yet.");
