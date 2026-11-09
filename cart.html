@@ -247,7 +247,7 @@
         const data = new FormData(form);
         const button = form.querySelector(".place-order-button");
         button.disabled = true; button.textContent = "Opening PhonePe checkout…"; status.textContent = ""; whatsappLink.hidden = true;
-                if (!document.getElementById("upi-qr-image").hidden) {
+                if (true) {
             try {
                 const reference = String(data.get("upiReference") || "").trim();
                 const response = await fetch("/api/manual-orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(checkoutPayload(data, items, reference)) });
