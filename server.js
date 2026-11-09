@@ -48,7 +48,7 @@ const PRODUCTS = Object.freeze({
     "rameshwaram-poondu-thokku": { name: "Rameshwaram Poondu Thokku", price: 210, grams: 200 }
 });
 
-const MIME_TYPES = {
+const PRODUCT_ID_ALIASES = Object.freeze({"mutton-pickle":"mutton-pickles","fish-pickle":"fish-pickles"});  const MIME_TYPES = {
     ".html": "text/html; charset=utf-8",
     ".css": "text/css; charset=utf-8",
     ".js": "text/javascript; charset=utf-8",
@@ -143,7 +143,7 @@ function validateOrder(body) {
 
     const items = [];
     for (const requested of body.items) {
-        const product = PRODUCTS[requested && requested.id];
+        const requestedId = requested && requested.id; const productId = PRODUCT_ID_ALIASES[requestedId] || requestedId; const product = PRODUCTS[productId];
         const qty = Number(requested && requested.qty);
         const grams = requested && requested.grams == null ? product && product.grams : Number(requested && requested.grams);
         const allowedGrams = product ? new Set([product.grams, 250, 500, 950, 1000]) : new Set();
@@ -151,7 +151,7 @@ function validateOrder(body) {
             throw new Error("A product, pack size, or quantity in the cart is invalid.");
         }
         const price = Math.round(product.price * grams / product.grams);
-        items.push({ id: requested.id, name: product.name + " (" + grams + " g)", price, qty, grams });
+        items.push({ id: productId, name: product.name + " (" + grams + " g)", price, qty, grams });
     }
 
     const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
